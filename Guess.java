@@ -1,45 +1,60 @@
 //NUMBER GUESSING GAME
-
+import java.util.*;
 import javax.swing.JOptionPane;
 
 public class Guess {
 
     public static void main(String[] args) {
-        int x = (int) Math.floor(Math.random() * 100);
+        Scanner sc = new Scanner(System.in);
+        int x = (int) Math.floor(Math.random() * 101);
         boolean isCorrect = false;
         int chances = 0;
+        System.out.println("Welcome to Number Guess game😁");
+        System.out.println("");
+        System.out.println("How to play:");
+        System.out.println("1.You have to guess a number between 1 and 100.");
+        System.out.println("2.You have 3 chances and in each chance you will have 7 attempts.");
+        System.out.println("3.Your Final score will be calculated based on your chances.");
+        System.out.print("Are You Ready(yes/no): ");
+        System.out.println("");
+        String consent = sc.next();
+        if(consent.equalsIgnoreCase("yes")){
+            System.out.println("This is your first chance");
 
-        JOptionPane.showMessageDialog(null, "You have 3 chances to guess. Best of luck👍.");
-
-        while (!isCorrect && chances < 3) {
-            int choices = 0;
-            while (choices < 7) {
-                String input = JOptionPane.showInputDialog(null, "Enter your guess");
-                int guess = Integer.parseInt(input);
-                choices++;
-                if (x == guess) {
-                    isCorrect = true;
-                    JOptionPane.showMessageDialog(null, " Congrats!🙌 Your guess is correct🥳.");
-                    JOptionPane.showMessageDialog(null, " You took " + choices + " choice👏.");
-                    break;
-                } else if (guess > x) {
-                        JOptionPane.showMessageDialog(null, "Your guess is too high");
-                } else {
-                        JOptionPane.showMessageDialog(null, "Your guess is too low");
+            JOptionPane.showMessageDialog(null, "You have 3 chances to guess. Best of luck👍.");
+    
+            while (!isCorrect && chances < 3) {
+                int choices = 0;
+                while (choices < 7) {
+                    System.out.println("Enter your guess🧐:");
+                    int guess = sc.nextInt();
+                    choices++;
+                    if (x == guess) {
+                        isCorrect = true;
+                        JOptionPane.showMessageDialog(null, " Congrats!🙌 Your guess is correct🥳.");
+                        JOptionPane.showMessageDialog(null, " You took " + choices + " choice(s)👏.");
+                        break;
+                    } else if (guess > x) {
+                            JOptionPane.showMessageDialog(null, "Your guess is too high");
+                    } else {
+                            JOptionPane.showMessageDialog(null, "Your guess is too low");
+                    }
+                    
                 }
-                
+                JOptionPane.showMessageDialog(null,"Ohhh...You have exhausted all your chances!");
+                JOptionPane.showMessageDialog(null,"Try Again!👍");
+                chances++;
+                System.out.println("This is your"+ chances+1 + "chance");
             }
-            JOptionPane.showMessageDialog(null,"Ohhh...You have exhausted all your chances!");
-            JOptionPane.showMessageDialog(null,"Try Again!👍");
-            chances++;
+    
+            if (isCorrect) {
+                int score = calculateScore(chances);
+                JOptionPane.showMessageDialog(null, "Your score is " + score + ".");
+            } else {
+                JOptionPane.showMessageDialog(null, "Oops you lose!😓 Better Luck next time😊");
+            }
         }
-
-        if (isCorrect) {
-            int score = calculateScore(chances);
-            JOptionPane.showMessageDialog(null, "Your score is " + score + ".");
-        } else {
-            JOptionPane.showMessageDialog(null, "Oops you lose!😓 Better Luck next time😊");
-        }
+        sc.close();
     }
 
     private static  int calculateScore(int chances) {
