@@ -1,52 +1,78 @@
-//STUDENT GRADE CALCULATOR
 
+//NUMBER GUESSING GAME
 import java.util.*;
+import javax.swing.JOptionPane;
 
-public class Grade {
+public class Guess {
+
     public static void main(String[] args) {
-        Scanner sc = new  Scanner( System.in);
-        System.out.print("Enter your marks of Telugu Subject:");
-        int Telugu = sc.nextInt();
-        System.out.print("Enter your marks of Hindi Subject:");
-        int Hindi = sc.nextInt();
-        System.out.print("Enter your marks of English Subject:");
-        int English = sc.nextInt();
-        System.out.print("Enter your marks of Maths Subject:");
-        int Maths = sc.nextInt();
-        System.out.print("Enter your marks of Physics Subject:");
-        int Physics = sc.nextInt();
-        System.out.print("Enter your marks of Chemistry Subject:");
-        int Chemistry = sc.nextInt();
+        Scanner sc = new Scanner(System.in);
+        int x = (int) Math.floor(Math.random() * 101);
+        boolean isCorrect = false;
+        int chances = 0;
+        System.out.println("Welcome to Number Guess game😁");
+        System.out.println("");
+        System.out.println("How to play:");
+        System.out.println("1.You have to guess a number between 1 and 100.");
+        System.out.println("2.You have 3 chances and in each chance you will have 7 attempts.");
+        System.out.println("3.Your Final score will be calculated based on your chances.");
+        System.out.print("Are You Ready(yes/no): ");
+        System.out.println("");
+        String consent = sc.next();
+        int guess = 0;
+        if (consent.equalsIgnoreCase("yes")) {
+            JOptionPane.showMessageDialog(null, "You have 3 chances to guess. Best of luck👍.");
+            System.out.println("This is your first chance");
 
-        int total = Telugu + Hindi + English + Maths + Physics + Chemistry;
-        int average = (int) Math.floor(total/6);
-        String Grade;
-        //Grades assigning
+            while (!isCorrect && chances < 3) {
+                int choices = 0;
 
-        if(average > 90){
-             Grade = "A+";
-        }
-        else if(average > 80 && average < 90){
-             Grade = "A";
-        }
-        else if(average > 80 && average < 90){
-             Grade = "B";
-        }
-        else if(average > 70 && average < 80){
-             Grade = "C";
-        }
-        else if(average > 40 && average < 70){
-             Grade = "D";
-        }
-        else{
-             Grade = "F";
-        }
+                while (choices < 7) {
+                    System.out.println("Enter your guess🧐:");
+                    try {
+                        guess = sc.nextInt();
+                    } catch (InputMismatchException e) {
+                        System.out.println("The entered input is not an integer");
+                        sc.next();
+                        continue;
+                    }
+                    choices++;
+                    if (x == guess) {
+                        isCorrect = true;
+                        JOptionPane.showMessageDialog(null, " Congrats!🙌 Your guess is correct🥳.");
+                        JOptionPane.showMessageDialog(null, " You took " + choices + " choice(s)👏.");
+                        break;
+                    } else if (guess > x) {
+                        JOptionPane.showMessageDialog(null, "Your guess is too high");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Your guess is too low");
+                    }
 
-        //Displaying Results
+                }
+                JOptionPane.showMessageDialog(null, "Ohhh...You have exhausted all your chances!");
+                JOptionPane.showMessageDialog(null, "Try Again!👍");
+                chances++;
+                int num = chances + 1;
+                System.out.println("This is your" + num + "chance");
+            }
 
-        System.out.println("Total Marks Obtained in all subjects: " + total +".");
-        System.out.println("Average percentage obtained is " + average + "%.");
-        System.out.println("Final Grade Obtained is " + Grade +".");
+            if (isCorrect) {
+                int score = calculateScore(chances);
+                JOptionPane.showMessageDialog(null, "Your score is " + score + ".");
+            } else {
+                JOptionPane.showMessageDialog(null, "Oops you lose!😓 Better Luck next time😊");
+            }
+        }
         sc.close();
+    }
+
+    private static int calculateScore(int chances) {
+        if (chances == 1) {
+            return 100;
+        } else if (chances == 2) {
+            return 90;
+        } else {
+            return 80;
+        }
     }
 }
